@@ -50,9 +50,9 @@ The data files containing the OS and Internet signatures have mostly the same te
 
 # Publication
 ### Conference
-Z. Shamsi and D. Loguinov, "Unsupervised Clustering Under Temporal Feature Volatility in Network Stack Fingerprinting,", ACM SIGMETRICS, June 2014.
+Z. Shamsi and D. Loguinov, "Unsupervised Clustering Under Temporal Feature Volatility in Network Stack Fingerprinting,", ACM SIGMETRICS, June 2016.
 
-	@inproceedings{shamsi2014,
+	@inproceedings{shamsi2016,
 		title={Unsupervised Clustering Under Temporal Feature Volatility in Network Stack Fingerprinting},
 		author={Zain Shamsi and Dmitri Loguinov},
 		booktitle={ACM SIGMETRICS},
