@@ -15,10 +15,20 @@ Compiling:
  
       `g++ HershelPlus.cpp LiveFingerprinter.cpp -lpcap -pthread`      
       
- - On Windows, Hershel+ was compiled using VS2017.
+ - On Windows, Hershel+ was compiled using VS2015.
+ 
+ libpcap/Winpcap is required. The HershelPlusOptimized.cpp can be substituted for HershelPlus.cpp to run the optimized algorithm, but should not matter for a single observation in live mode or a small observation set in offline mode.
  
 Running:
- - Live Mode: `HershelPlus.exe database_file mapping_file IP port`
+ - Live Mode: `HershelPlus.exe database_file mapping_file IP port`  
+   **NOTE:** Running in Live mode requires your machine to allow half-open TCP connections. This means kernel generated RSTs need to be suppressed. 	
+	- On Windows, the Windows firewall should do this by default. If not, create a custom rule to drop unsolicited SYN/ACKs
+	- On Linux, inserting the following iptables rules should take care of this:  
+		`sudo iptables -t filter -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT`  
+		`sudo iptables -t filter -A INPUT -p icmp -j ACCEPT`  
+		`sudo iptables -t filter -A INPUT -i lo -j ACCEPT`  
+		`sudo iptables -t filter -A INPUT -j DROP`  
+	This accepts anything from established connections, icmp pings, and all traffic on the loopback interface. Everything else is dropped. 
  - Offline Mode: `HershelPlus.exe database_file mapping_file observations_file` 
 
 The Visual Studio project files use the Windows library for multi-threading and hence compile in Win32/64. It also includes the Hershel+ database and example signatures. This is likely the version you want to run if you have a large dataset.
@@ -37,7 +47,6 @@ The data files containing the OS and Internet signatures have mostly the same te
 	int rst_present
 	int rst_ack flag
 	int rst_window
-	int rst_sequence
 	int rst_nonzero
 	double RTT (0 value for database)
 	double RTO1_timestamp
