@@ -1,0 +1,421 @@
+ID,Label
+0,device111
+1,HP LaserJet Series / OfficeJet Series / Brother MFC Printers
+2,HP LaserJet Series
+3,Canon MF4500 Series
+4,Asus RT-AC66U Router
+5,Raid Controller
+6,SUSE Linux
+7,Windows 2008 R2 / 2012
+8,Windows 7 / 2008 R2
+9,F5 Big IP
+10,Embedded Linux
+11,Dell Color Laser Printers
+12,3Com Device
+13,device276
+14,device193
+15,device253
+16,Xerox Color 560
+17,Konica Minolta Printers
+18,Dell Color Laser Printers / Xerox WorkCenter Series
+19,Dell Laser Printers
+20,Dell Color Laser Series
+21,Xerox WorkCenter Series
+22,Traf-Sys MIU-1000 Data Controller
+23,device279
+24,device136
+25,Dell Color Laser Printers / Xerox WorkCenter Series / Xerox Phaser Series
+26,CentOS
+27,Windows XP / 2003
+28,D-Link DCS-6620 Internet Camera
+29,Xerox WorkCenter Series
+30,Dell Color Laser Printers / Xerox WorkCenter Series
+31,Xerox WorkCenter Series
+32,Dell Color Laser Printers / Xerox WorkCenter Series
+33,Dell Color Laser Printers / Xerox WorkCenter Series
+34,Ricoh Aficio Printers
+35,Dell Switch
+36,Linux
+37,HP LaserJet Series / Brother MFC Printers
+38,device97
+39,HP Proliant iLO Server
+40,APC Embedded
+41,Schneider Building Operation Station
+42,Epson Workforce Series
+43,HP LaserJet Series
+44,Schneider PowerLogic Ethernet Communications Card
+45,Xerox WorkCenter Series
+46,Mac OSX Server
+47,device288
+48,device289
+49,Codian MCU
+50,Windows XP / 2000 / 2003
+51,device291
+52,device292
+53,Cisco IOS
+54,Trendnet TE-100-P1P Print Server
+55,Dell Laser Printers / Lexmark Printers
+56,Xerox Phaser Series
+57,HP Proliant iLO Server
+58,HP LaserJet Series
+59,TrippLite PowerAlert / WxGoos Climate Monitor / PowerLogic EGX100 Gateway
+60,3Com Device
+61,3Com Switch
+62,Axis 2100 Network Camera
+63,Geist Watchdog 15
+64,Panasonic Network Camera / HP Proliant ILO Server
+65,Cisco IP Phone CP-8941
+66,Cisco IP Phone CP-6921 
+67,3Com Device
+68,Xerox WorkCenter Series
+69,Brother MFC Printers
+70,HP Embedded
+71,Canon MF220 Series
+72,Ubuntu / Redhat / CentOS / SUSE Linux / Scientific Linux
+73,Odyssey LI-COR Infrared Imaging System
+74,HP LaserJet Series
+75,HP LaserJet Series
+76,D-Link DGS 1248T Switch
+77,Windows XP / 2003
+78,Brother MFC-J5720
+79,Quantum Superloader
+80,IT Temperature Monitor Model E16
+81,Unix
+82,Windows
+83,device210
+84,Canon MX920 series
+85,device119
+86,Mac OSX Server
+87,Juniper MX240 Router
+88,device214
+89,Ricoh Aficio Printers
+90,HP LaserJet Series
+91,device306
+92,HP Proliant iLO Server
+93,Windows 7 / 2008 R2
+94,device168
+95,HP Proliant iLO Server
+96,AMX Television Distribution System
+97,Dell 2162DS KVM Switch 
+98,HP LaserJet Series
+99,HP Proliant iLO Server
+100,Windows XP
+101,Xerox WorkCenter Series
+102,device308
+103,Redhat
+104,Xerox Phaser Series
+105,device309
+106,device255
+107,device310
+108,Brother HL-6050 Series
+109,HP LaserJet Series
+110,Loytech LDALI-3E101
+111,Coolcentric CDU
+112,APC Embedded
+113,MOXA NE-4100T
+114,Konica Minolta Printers
+115,HP LaserJet 500 M551
+116,FreeBSD
+117,device252
+118,device313
+119,FreeBSD
+120,Ubuntu / Redhat / SUSE Linux
+121,HP OfficeJet Series
+122,Ricoh Aficio MP C2551 / Codian IP VCR
+123,Brother MFC-7820N
+124,Windows 7 / 2008 R2
+125,Lantronix Server
+126,Dymo LabelWriter Print Server
+127,device52
+128,NEC Projector Controller
+129,TemperatureGuard VM605E
+130,device170
+131,Aptilo Mobile Access Server
+132,HP LaserJet Series
+133,Dell Kace K1000
+134,BestLink SNMP/WEB Adapter
+135,Ubuntu
+136,Schneider PowerLogic ION7650
+137,Xerox WorkCenter Series
+138,Rariton Dominion LX
+139,ThecusOS
+140,Synology DiskStation
+141,Windows XP / 2003
+142,device100
+143,Lantronix Server
+144,Samsung ML-2150 Network Printer
+145,device150
+146,Ricoh Aficio SP Series
+147,Windows 2008 R2 / 2012
+148,Kyocera Printers
+149,Windows 8 / Server 2012
+150,device323
+151,Ricoh Aficio MP Series
+152,AirOS / Aruba Networks Controller
+153,HP LaserJet Series
+154,StarDot NetcamSC
+155,Kyocera Printers
+156,Polycom VSX8000
+157,device208
+158,device325
+159,Dell PowerVault TL2000
+160,device327
+161,device274
+162,device187
+163,Dell Laser Printers
+164,Burk ARC Plus
+165,Burk Plus-X IIU
+166,HWg-STE: Ethernet thermometer
+167,Windows 2003 / Vista / 7 / 8 / 2008 / 2008 R2 / 2012
+168,Konica Minolta Printers
+169,Canon imageRunner 2530
+170,Planar Wallnet Video Controller
+171,Novell Netware
+172,Vbrick Video Systems
+173,device331
+174,Burk Plus-X 300
+175,HP Proliant iLO Server
+176,HP LaserJet Series
+177,Epson Stylus Pro Series
+178,Xerox Phaser Series
+179,Dell Laser Printers / Xerox Phaser Series
+180,Xerox WorkCenter Series
+181,device333
+182,device161
+183,Windows 8 / Server 2012
+184,Xerox WorkCenter Series
+185,device336
+186,Citrix Netscaler
+187,Dell Color Laser Printers
+188,Ubuntu / Redhat / CentOS / SUSE Linux / Scientific Linux
+189,HP Proliant iLO Server
+190,Ricoh Aficio MP Series
+191,SUSE Linux
+192,Dell Laser Printers
+193,device340
+194,Windows 7 / 2008 R2
+195,Dell Laser Printers
+196,Dell 4322DS KVM Switch
+197,Dell Laser Printers
+198,Windows XP / 2003
+199,Netbotz Sensor Pod
+200,Polycom VSX7000e
+201,HP LaserJet Series
+202,Ricoh Aficio Printers
+203,device223
+204,NexSAN GRIIDC 
+205,device90
+206,Embedded Linux
+207,Dell Color Laser Printers / Xerox WorkCenter Series / Xerox Phaser Series
+208,Dell Color Laser Printers
+209,Dell Laser Printers
+210,Cisco MDS 9000
+211,HP LaserJet Series
+212,HP LaserJet Series
+213,Schneider TAC Xenta 527-NPR Security Router
+214,HP Proliant iLO Server
+215,Dell Switch
+216,Spacesaver Powerlink
+217,OpenVMS
+218,Digi One SP
+219,NetAPP Data ONTAP 7.3 / 8.2
+220,device75
+221,Lexmark T520
+222,Panasonic WV-ST162 Network Camera
+223,Enterasys Switch
+224,Sharp MX-4111N
+225,HP Procurve / APC Embedded
+226,Unix
+227,SUSE Linux
+228,AVTech RoomAlert
+229,Datamax W-Class 6208 Printer
+230,Liebert OpenComms Web Card
+231,device232
+232,Rariton Dominion KX III
+233,APC Embedded
+234,HP Proliant iLO Server
+235,HP Proliant iLO Server
+236,HP Proliant iLO Server
+237,Sharp MX-M283N
+238,device354
+239,CentOS
+240,HP LaserJet Series
+241,device154
+242,RS2 Technologies EP-1501
+243,3Com Device
+244,device144
+245,HP Procurve Switch
+246,HP LaserJet Series
+247,Ricoh Aficio MP Series
+248,FreeBSD
+249,CentOS
+250,F5 Big IP
+251,SonicWALL
+252,CentOS
+253,device199
+254,Citrix Netscaler
+255,Dell Switch
+256,Solaris 9 / Solaris 10
+257,PowerDSine Power View Pro
+258,HP LaserJet Series
+259,HP LaserJet Series / Brother MFC Printers
+260,Ricoh Aficio MP Series
+261,Polycom Soundpoint IP Telephone
+262,CentOS
+263,AdTran Phone Manager
+264,Windows XP / 2000
+265,IrTrans LAN Controller
+266,FreeRTOS 7.4.2
+267,Crestron RoomView
+268,Xante Accel-a-Writer 4G
+269,Dell Laser Printers / Lexmark Printers
+270,AVTech RoomAlert / Lightware Matrix / Rockwell Automation
+271,Xerox WorkCenter Series
+272,Canon D1300 Series
+273,device365
+274,Xerox WorkCenter Series
+275,Xerox WorkCenter Series
+276,IBM TS7700 Virtualization Engine
+277,Ubuntu
+278,Trend IQ3 Controller
+279,device221
+280,ZOT Print Server
+281,Polycom HDX 8000 HD
+282,device236
+283,Redhat
+284,Windows Vista / 7 / 2008 / 2008 R2 / 2012
+285,device367
+286,Polycom RealPresence Server 4000
+287,device369
+288,device176
+289,Cisco Meraki MX80
+290,Epson Workforce Series
+291,device371
+292,Redhat
+293,Windows 2008 R2 / 2012
+294,Windows 7 / 2008 R2
+295,GbE2c Ethernet Blade Switch
+296,Redhat
+297,ITWatchDogs SuperGoose II
+298,device375
+299,device376
+300,Polycom ViewStation 4000 MP
+301,Polycom VSX7000e
+302,Mac OSX Server
+303,Tektronix TDS 3014
+304,device377
+305,HP Embedded
+306,ERF-Gateway
+307,Dell Switch / Entrasys Switch
+308,device238
+309,Windows XP / 2000 / 2003
+310,Windows 2008 R2 / 2012
+311,Buffalo LinkStation NAS
+312,Canon imageRunner 2525
+313,Xerox Phaser Series
+314,device196
+315,Zebra ZTC GX420t
+316,HP LaserJet Series
+317,Polycom VSX7000e
+318,Dell 2162DS KVM Switch 
+319,SonicWALL
+320,CentOS / Scientific Linux
+321,device382
+322,VMWare ESXi
+323,Ricoh Aficio SP Series
+324,Samsung M283 Printer
+325,Lexmark X500 Series
+326,Canon MF5770
+327,Schneider Sarix IP-Camera
+328,device385
+329,Ubuntu / Debian
+330,device387
+331,EMC Navisphere 6
+332,Windows XP / 2003
+333,3Com IntelliJack Gigabit Switch NJ2000
+334,Windows 2008 / 2008 R2
+335,Windows
+336,device181
+337,AKCP sensorProbe2
+338,Xerox Equitrac
+339,Ubuntu / Debian / Redhat / CentOS / Embedded Unix
+340,device390
+341,device391
+342,Digimerge Security DVR
+343,HP Procurve 2900-48G Switch
+344,HP LaserJet Series / OfficeJet Series / Brother MFC Printers
+345,Xerox WorkCenter Series
+346,Canon IPF9100
+347,Dell Color Laser Printers / Xerox WorkCenter Series / Xerox Phaser Series
+348,JetStor Raid Manager
+349,JetStor Raid Manager
+350,Dell Color Laser Printers / Xerox WorkCenter Series
+351,Xerox WorkCenter Series
+352,Xerox WorkCenter Series
+353,Ricoh Aficio MP C2551
+354,Campbell Scientific CR1000 Std 24
+355,Foscam IP Camera
+356,StarDot NetcamSC
+357,device241
+358,Campbell Scientific CR1000 Std 24
+359,Crestron Xpanel
+360,HP LaserJet Series
+361,Windows 7 / 2008 R2
+362,HP OfficeJet Series
+363,device397
+364,Solaris 9 / Solaris 10
+365,Dell Laser Printers / Xerox Workcenter Series
+366,Embedded Linux
+367,WEB-TEMP Temperature Measurement Device
+368,device398
+369,Ubuntu / Redhat / CentOS / SUSE Linux / Scientific Linux
+370,Xerox WorkCenter Series
+371,Brother MFC-J5910
+372,Dell Laser Printers
+373,device400
+374,device132
+375,Xerox WorkCenter Series
+376,Canon D460-490
+377,device402
+378,device403
+379,HP LaserJet Series
+380,device404
+381,HP LaserJet Series
+382,HP Proliant iLO Server
+383,Windows 2000
+384,APC Embedded
+385,HP OfficeJet Series
+386,HP LaserJet Series / Brother MFC Printers
+387,Xerox Phaser Series
+388,WD My Book
+389,Cisco IOS
+390,Hickman ITV 450D
+391,device247
+392,Windows 7 / 2008 R2
+393,Cisco IP Phone CP-7965G
+394,Cisco IP Phone CP-7965G 
+395,Cisco IP Phone CP-7937G
+396,Cisco Unified IP Phone CP-7965G
+397,APC Embedded
+398,device133
+399,HP LaserJet Series
+400,Xerox WorkCenter Series
+401,device412
+402,Polycom ViewStation 4000 MP
+403,Ericsson RX-8000
+404,device414
+405,AudioCodes Mediant Series
+406,Polycom VSX7000e
+407,Polycom VSX7000e
+408,Polycom VSX7000a
+409,device417
+410,device418
+411,HP LaserJet Series
+412,Barix Exstreamer 1000
+413,Path1 VX8000
+414,VBrick Video Systems
+415,Windows Vista / 7 / 2008 / 2008 R2
+416,device248
+417,Cisco C360 / Xerox ColorQube Series
+418,Windows XP / 2003
+419,D-Link DCS-910
