@@ -1,6 +1,6 @@
 /*
  * Class definition for LiveFingerprinter
- * Author: Zain Shamsi
+ *
  */
 
 #define __STDC_WANT_LIB_EXT1__ 
@@ -54,6 +54,7 @@ static int gettimeofday(struct timeval *tv, struct timezone *tz)
 
 #else
 #include <sys/socket.h>
+#include <unistd.h>
 #include <netinet/ip.h>
 #include <arpa/inet.h>
 #include <sys/ioctl.h>
@@ -62,6 +63,16 @@ static int gettimeofday(struct timeval *tv, struct timezone *tz)
 #include <netdb.h>
 #include <net/if_arp.h>
 #include <errno.h>
+#include <linux/netlink.h>
+#include <linux/rtnetlink.h>
+
+struct route_info {
+	u_int dstAddr;
+	u_int srcAddr;
+	u_int gateway;
+	char ifName[IF_NAMESIZE];
+};
+
 #endif
 
 #include <pcap.h>
