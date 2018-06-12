@@ -1,4 +1,4 @@
-//    Copyright © 2014 IRL at Texas A&M University (http://irl.cse.tamu.edu)
+//    Copyright Â© 2014 IRL at Texas A&M University (http://irl.cse.tamu.edu)
 //
 //    This file is part of Hershel+.
 //
@@ -13,7 +13,8 @@
 //    GNU Lesser General Public License for more details
 //    http://www.gnu.org/licenses/lgpl.txt.
 //
-//	  Author: Zain Shamsi
+//    Contact:
+//	  Dmitri Loguinov (dmitri@cse.tamu.edu)
 //
 //    Data and signatures:
 //    http://irl.cse.tamu.edu/projects/osf
@@ -22,6 +23,14 @@
 //	  Z. Shamsi, D. Loguinov, "Unsupervised Clustering Under Temporal Feature 
 //	  Volatility in Network Stack Fingerprinting, " ACM SIGMETRICS, June 2016.
 //
+//	  Since Hershel+ requires the TCP handshake to remain half open, kernel RSTs need to be suppressed.
+//    On Windows, the Windows firewall should do this by default
+//	  On Linux, inserting the following iptables rules will take care of this:
+//		sudo iptables -t filter -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+//		sudo iptables -t filter -A INPUT -p icmp -j ACCEPT
+//		sudo iptables -t filter -A INPUT -i lo -j ACCEPT
+//		sudo iptables -t filter -A INPUT -j DROP
+//	  This accepts anything from established connections, icmp pings, and anything on the loopback interface and drops the rest.
 
 #ifdef _MSC_VER
 #define _CRT_SECURE_NO_WARNINGS
@@ -218,7 +227,7 @@ double MatchConstantFeatures(Signature& target, Signature& dbsig) {
 /***********************************************************************/
 
 void HershelPlus(unordered_map<unsigned int, vector<Signature>>& database, vector<Signature>& observations){
-	printf("\n---Starting Hershel+ Classification---\n");
+	printf("\n---Starting Hershel+ Classification on %zd observation(s)---\n", observations.size());
 	
 	//set up OWD probabilities as exponential
 	vector<double> owd_prob_array;	
@@ -370,6 +379,10 @@ int main(int argc, char* argv[]){
 	int result = inet_pton(AF_INET, argv[3], &ip);
 	if (result == 1){
 		//it was an ip
+		if (argc < 5) {
+			printf("Port argument missing\n");
+			exit(-1);
+		}
 		port = atoi(argv[4]);
 		
 		//set up for live fingerprinting
@@ -386,20 +399,26 @@ int main(int argc, char* argv[]){
 			exit(-1);
 		}
 		
-		printf("\rSignature being classified: %d,%d,%d,%s,%d,%d,%d,%d,%d,%d", s.win, s.ttl, s.df, s.options_str, s.mss, s.rst, s.rst_ack, s.rst_win, s.rst_seq, s.rst_nonzero);
-		for (u_int r = 0; r < s.packet_arrival_time.size(); r++) printf(",%lf", s.packet_arrival_time[r]);	
-		printf("\n");
 		observations.push_back(s);
 	}
 	else {
 		//it was not an IP, read observations
-		vector<Signature> observations = readSigList(argv[3]);
+		observations = readSigList(argv[3]);
 	}
 	
 	//run Hershel on observations	
 	HershelPlus(database, observations);
 		
 	//print out observation results
-	for (Signature o : observations) printf("Observation %u classified as id %d (%s)\n", o.id, o.id_classified, os_mapping[o.id_classified].c_str());
-	
+	for (Signature o : observations){ 
+		printf("Observed signature: %d,%d,%d,%s,%d,%d,%d,%d,%d,%d", o.win, o.ttl, o.df, o.options_str, o.mss, o.rst, o.rst_ack, o.rst_win, o.rst_seq, o.rst_nonzero);
+		for (u_int r = 0; r < o.packet_arrival_time.size(); r++) printf(",%lf", o.packet_arrival_time[r]);	
+		printf("\n");
+		printf("Matching signature: ");
+		printf("%d,%d,%d,%s,%d,%d,%d,%d,%d,%d", database[o.id_classified][0].win, database[o.id_classified][0].ttl, database[o.id_classified][0].df, database[o.id_classified][0].options_str, database[o.id_classified][0].mss, database[o.id_classified][0].rst, database[o.id_classified][0].rst_ack, database[o.id_classified][0].rst_win, database[o.id_classified][0].rst_seq, database[o.id_classified][0].rst_nonzero);
+		for (u_int r = 0; r < database[o.id_classified][0].packet_arrival_time.size(); r++) printf(",%lf", database[o.id_classified][0].packet_arrival_time[r]);	
+		printf("\n");
+		
+		printf("\tObservation %u classified as %s \n\n", o.id, os_mapping[o.id_classified].c_str());
+	}
 }
