@@ -370,6 +370,11 @@ int LiveFingerprinter::getFingerprint(char* target, unsigned short port, Signatu
 		printf("Error reading the packets: %s\n", pcap_geterr(adapterHandle));
 		return -1;
 	}	
+		
+	if (sig.packet_arrival_time.empty()){
+		printf("Did not receive any packets from the target. Is the service reachable?\n");
+		return -1;
+	}
 
 	//output signature to file
 	fprintf(ofile, "%s,%d,%d,%d,%s,%lld,%d,%d,%d,%d,%d,%d", target, sig.win, sig.ttl, sig.df, sig.options_str, sig.options_int, sig.mss, sig.rst, sig.rst_ack, sig.rst_win, sig.rst_seq, sig.rst_nonzero);
