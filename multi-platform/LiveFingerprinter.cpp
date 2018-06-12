@@ -1,6 +1,6 @@
 /*
  * Code for using pcap for active fingerprinting
- * Author: Zain Shamsi
+ *
  */
 
 #include "LiveFingerprinter.h"
@@ -533,7 +533,7 @@ int LiveFingerprinter::createPacket(char *target, int target_port, int* srcPort,
 	//}						
 	//freeifaddrs(ifap);
 	
-	//using ioctl
+	//using ioctl and netlink sockets
 	struct ifconf ifc;
 	char buf[1024];
 	
@@ -581,33 +581,150 @@ int LiveFingerprinter::createPacket(char *target, int target_port, int* srcPort,
 			}
 			printf("Local IP: %s\n", host);
 			strcpy(src, host);
-			
-			
-			//get destination MAC using ARP ioctl
-			struct arpreq areq;
-			memset(&areq, 0, sizeof(areq));
-			
-			sockaddr_in* sa;
-			sa = (sockaddr_in*)&areq.arp_pa;
-			sa->sin_family = AF_INET;
-			inet_aton(target, &sa->sin_addr);
-			
-			sa = (sockaddr_in*)&areq.arp_ha;
-			sa->sin_family = ARPHRD_ETHER;
-			
-			strcpy(areq.arp_dev, ifr.ifr_name);
-			
-			if (ioctl(fd, SIOCGARP, (caddr_t) &areq) == -1){
-				printf("ioctl SIOCGARP failed! errno: %d\n", errno);
-				return -1;
-			}
-			mac = areq.arp_ha.sa_data;
-			//printf("Dest MAC Address Is: %02X-%02X-%02X-%02X-%02X-%02X\n", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);		
-			memcpy(ehdr->dest, mac, MACADDRLEN);				
-		}
-		
+		}		
 		it++;
 	}	
+	
+	//read destination MAC from system ARP table using ioctl
+	//assumes your system cache stores the MAC of your gateway. 
+	
+	//first get gateway IP using Netlink Socket to read system route table
+	//Netlink documentation: http://smacked.org/docs/netlink.pdf
+	//code below taken from https://stackoverflow.com/questions/3288065/
+	//why is this process so complicated in linux?
+	
+	u_int gatewayIP = 0;
+	struct nlmsghdr *nlMsg;
+	struct nlmsghdr *nlHdr;
+	struct rtmsg *rtMsg;
+	struct route_info *rtInfo;
+	char msgBuf[8192];
+	
+	int sock, readLen = 0, msgLen = 0, msgSeq=0, pid = getpid();
+	
+	if ((sock = socket(PF_NETLINK, SOCK_DGRAM, NETLINK_ROUTE)) < 0){
+		printf("Netlink socket creation failed: %d\n", errno);
+		return -1;
+	}
+	
+	//create request
+	memset(msgBuf, 0, 8192);
+	nlMsg = (struct nlmsghdr *)msgBuf;
+	rtMsg = (struct rtmsg *)NLMSG_DATA(nlMsg);
+	
+	nlMsg->nlmsg_len = NLMSG_LENGTH(sizeof(struct rtmsg));
+	nlMsg->nlmsg_type = RTM_GETROUTE;
+	nlMsg->nlmsg_flags = NLM_F_DUMP | NLM_F_REQUEST;
+	nlMsg->nlmsg_seq = msgSeq++;
+	nlMsg->nlmsg_pid = pid;
+	
+	//send request
+	if (send(sock, nlMsg, nlMsg->nlmsg_len, 0) < 0){
+		printf("Write to netlink socket failed: %d\n", errno);
+		return -1;
+	}
+	
+	//recv response			
+	memset(msgBuf, 0, 8192);
+	char* bufptr = msgBuf;
+	do {
+		if ((readLen = recv(sock, bufptr, 8192 - msgLen, 0)) < 0){
+			printf("Error in receiving Netlink response: %d\n", errno);
+			return -1;
+		}
+		
+		nlHdr = (struct nlmsghdr *)bufptr;			
+		
+		//check if error
+		if ((NLMSG_OK(nlHdr, readLen) == 0) || (nlHdr->nlmsg_type == NLMSG_ERROR)){
+			printf("Error in Netlink response packet: %d\n", errno);
+			return -1;
+		}
+		
+		//if last message, break
+		if (nlHdr->nlmsg_type == NLMSG_DONE) break;
+		else {
+			bufptr += readLen;
+			msgLen += readLen;
+		}
+		
+		//if not multipart message, break
+		if ((nlHdr->nlmsg_flags & NLM_F_MULTI) == 0) break;
+		
+	}while((nlHdr->nlmsg_seq != msgSeq) || (nlHdr->nlmsg_pid != pid));
+	
+	//parse response			
+	for (; NLMSG_OK(nlMsg,msgLen); nlMsg = NLMSG_NEXT(nlMsg,msgLen)){						
+		route_info rtinfo;
+		struct rtattr *rtAttr;
+		
+		rtMsg = (struct rtmsg *)NLMSG_DATA(nlMsg);
+		
+		//if not AF_INET or not main routing table, skip
+		if ((rtMsg->rtm_family != AF_INET) || (rtMsg->rtm_table != RT_TABLE_MAIN)) continue;
+	
+		//get attributes
+		rtAttr = (struct rtattr *)RTM_RTA(rtMsg);
+		int rtLen = RTM_PAYLOAD(nlMsg);				
+		for (; RTA_OK(rtAttr, rtLen); rtAttr = RTA_NEXT(rtAttr, rtLen)){					
+			switch(rtAttr->rta_type){
+				case RTA_OIF: 
+					if_indextoname(*(int*)RTA_DATA(rtAttr), rtinfo.ifName);
+					break;
+				case RTA_GATEWAY:
+					rtinfo.gateway = *(u_int *)RTA_DATA(rtAttr);
+					break;
+				case RTA_PREFSRC:
+					rtinfo.srcAddr = *(u_int *)RTA_DATA(rtAttr);
+					break;
+				case RTA_DST:
+					rtinfo.dstAddr = *(u_int *)RTA_DATA(rtAttr);
+					break;
+			}
+		}
+		
+		//print info
+		//printf("Interface: %s \n Src: %u \n Dst: %u \n Gateway: %u \n\n", rtinfo.ifName, rtinfo.srcAddr, rtinfo.dstAddr, rtinfo.gateway);
+		
+		//if this is for the chosen adapter
+		if (strcmp(adapterName, rtinfo.ifName) == 0){
+			gatewayIP = rtinfo.gateway;
+			printf("Gateway IP: %s\n", inet_ntoa(*(struct in_addr*) &gatewayIP));
+			break; 
+			//Now there could be multiple gateways for this interface, though not common
+			//We are being lazy and taking the first one we see
+			//A more correct way would be to do a prefix match against our target and pick that gateway
+		}		
+	}
+	
+	// fire ioctl for ARP table	
+	if (gatewayIP > 0){
+		struct arpreq areq;
+		memset(&areq, 0, sizeof(areq));
+		
+		sockaddr_in* sa;
+		sa = (sockaddr_in*)&areq.arp_pa;
+		sa->sin_family = AF_INET;
+		//inet_aton(target, &sa->sin_addr);
+		sa->sin_addr = *(struct in_addr*) &gatewayIP;
+		sa = (sockaddr_in*)&areq.arp_ha;
+		sa->sin_family = ARPHRD_ETHER;
+		
+		strcpy(areq.arp_dev, adapterName);
+		
+		if (ioctl(fd, SIOCGARP, (caddr_t) &areq) == -1){
+			printf("ioctl SIOCGARP failed! errno: %d\n", errno);
+			return -1;
+		}
+		char* mac = areq.arp_ha.sa_data;
+		
+		//printf("Dest MAC Address Is: %02X-%02X-%02X-%02X-%02X-%02X\n", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);		
+		memcpy(ehdr->dest, mac, MACADDRLEN);	
+	}
+	else {			
+		//did not get a gateway IP, set dest MAC to 0 and cross our fingers
+		memset(ehdr->dest, 0, MACADDRLEN);				
+	}
 	
 	
 #endif
